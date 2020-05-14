@@ -1,28 +1,56 @@
 import React, { useEffect, useRef } from "react";
-
+import Turtle from "./animals_1.png";
 function Canvas() {
     const canvasRef = useRef(null);
+    function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+    }
     useEffect(() => {
+        let imgTag = new Image();
         const canvas = canvasRef.current;
-        canvas.width = window.innerWidth / 2;
+        //canvas.width = window.innerWidth / 2;
         canvas.height = window.innerHeight - 10;
         const c = canvas.getContext("2d");
+        var x = 0;
+        var y = canvas.height;
+        imgTag.onload = animate;
+        imgTag.src = Turtle;
+        let arrY = [];
+        let initialVelocity = [];
+        let acc = [];
+        let numberOfTurtle = 20;
+        let gap = 64;
+        for (let i = 0; i < numberOfTurtle; i++) {
+            arrY[i] = y - 64;
+            c.drawImage(imgTag, x + gap * i, arrY[i]); // draw image at current position
 
-        //Arc or the circle logic
-        var x = Math.random();
-        var y = Math.random();
-        function animate() {
-            requestAnimationFrame(animate);
-            c.clearRect(0, 0, window.innerWidth, window.innerHeight);
-            c.beginPath();
-            c.arc(x, y, 30, 0, Math.PI * 2, false);
-            c.stroke();
-            y += 1;
-            if (y > window.innerHeight) return 0;
+            initialVelocity[i] = Math.random();
+            acc[i] = Math.random();
+            //console.log(initialVelocity);
         }
-        animate();
+        let count = 0;
+        let accl = [...acc];
+        function animate() {
+            if (count % 50 === 0) {
+                acc = [...accl];
+                for (let i = 0; i < getRandomInt(1, 10); i++) {
+                    acc[getRandomInt(0, numberOfTurtle)] =
+                        getRandomInt(1, 5) * Math.random();
+                }
+            }
+            c.clearRect(0, 0, canvas.width, canvas.height); // clear canva
+            for (let i = 0; i < numberOfTurtle; i++) {
+                c.drawImage(imgTag, x + gap * i, arrY[i]); // draw image at current position
+                arrY[i] = arrY[i] - 0.2 * acc[i];
+            }
+            count++;
+
+            if (Math.min(...arrY) > 0) requestAnimationFrame(animate); // loop
+        }
     });
-    return <div>{<canvas ref={canvasRef} width="100" height="100" />}</div>;
+    return <canvas ref={canvasRef} width="1300" height="20000" />;
 }
 
 export default Canvas;
