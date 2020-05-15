@@ -22,11 +22,15 @@ function App() {
                         <Timer />
                     </div>
                 </div>
-                <div className="row justify-content-center alert alert-light no-gutters">
+                <div className="row justify-content-center alert alert-success no-gutters">
                     <p className="text-center">
-                        Choose a Turtle in your mind. When the timer finishes
-                        you can test your luck weather your turtle won or not.
-                        It's really fun!!
+                        Choose your{" "}
+                        <span style={{ fontWeight: "bold" }}>Alpha.</span> When
+                        the timer finishes you can test your luck weather your
+                        turtle won or not. It's really fun!!
+                    </p>
+                    <p style={{ color: "red" }}>
+                        Slower the Turtle, Better the Turtle!
                     </p>
                 </div>
 

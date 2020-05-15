@@ -1,62 +1,58 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
+import { useInterval } from "./CustomHooks";
 import "./Timer.css";
 
 const Timer = () => {
     const inputEl = useRef(null);
-    const [countDownToString, setCountDownToString] = useState(
-        "July 30, 2020 00:00:00"
-    );
+    const [distance, setDistance] = useState(0);
     const [timerDays, setTimerDays] = useState("00");
     const [timerHours, setTimerHours] = useState("00");
     const [timerMin, setTimerMin] = useState("00");
     const [timerSec, setTimerSec] = useState("00");
-    const [start, setStart] = useState(false);
+    const [alert, setAlert] = useState(false);
 
     let interval = useRef();
 
     const handleCountDownStart = () => {
-        setCountDownToString(inputEl.current.value);
-        console.log(countDownToString);
+        setAlert(false);
+        let hms = inputEl.current.value; // your input string
+        let a = hms.split(":"); // split it at the colons
+        // minutes are worth 60 seconds. Hours are worth 60 minutes.
+        let seconds = +a[0] * 60 * 60 + +a[1] * 60 + +a[2];
+        if (seconds) {
+            setDistance(seconds * 1000);
+        } else {
+            setAlert(true);
+        }
     };
     //"July 30, 2020 00:00:00"
-    const startTimer = () => {
-        const countDownDate = new Date(countDownToString).getTime();
-        console.log(countDownDate);
 
-        interval = setInterval(() => {
-            const now = new Date();
-            const distance = countDownDate - now;
-            console.log(distance);
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor(
-                (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-            );
-            const minitues = Math.floor(
-                (distance % (1000 * 60 * 60)) / (1000 * 60)
-            );
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    useInterval(() => {
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor(
+            (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        const minitues = Math.floor(
+            (distance % (1000 * 60 * 60)) / (1000 * 60)
+        );
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            if (distance < 0) {
-                // stop our timer
-                clearInterval(interval.current);
-            } else {
-                //Update ourr timer
-                setTimerDays(days);
-                setTimerHours(hours);
-                setTimerMin(minitues);
-                setTimerSec(seconds);
-            }
-        }, 1000);
-    };
-
-    useEffect(() => {
-        startTimer();
-        return () => {
-            // eslint-disable-next-line react-hooks/exhaustive-deps
+        if (distance < 0) {
+            // stop our timer
             clearInterval(interval.current);
-        };
-    }, [countDownToString]);
+        } else {
+            //Update ourr timer
+            setTimerDays(days);
+            setTimerHours(hours);
+            setTimerMin(minitues);
+            setTimerSec(seconds);
+        }
+        // Reduce the distance
+        setDistance(distance - 1000);
+
+        // I wat to put new logic for countdown
+    }, 1000);
 
     return (
         <section className="timer container">
@@ -97,12 +93,12 @@ const Timer = () => {
                 </div>
             </div>
             <div className="row  justify-content-center pb-3 ">
-                <div className="col-lg-6 pb-2">
+                <div className="col-lg-10 pb-2">
                     <input
                         type="text"
                         ref={inputEl}
                         className="time-input form-control "
-                        placeholder="Enter time HH : MM : SS"
+                        placeholder="Format HH : MM : SS Example: 02 : 01 : 37"
                     />
                 </div>
                 <div className="col-lg-2">
@@ -113,6 +109,14 @@ const Timer = () => {
                         GO!
                     </button>
                 </div>
+            </div>
+            <div className="row  justify-content-center p-3 ">
+                {alert && (
+                    <div class="container alert alert-danger" role="alert">
+                        Please give interval in a valid format. Hours : Minitues
+                        : Seconds !
+                    </div>
+                )}
             </div>
         </section>
     );
