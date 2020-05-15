@@ -1,3 +1,7 @@
 .row .col {
     outline: 1px dotted rgba(0, 0, 0, 0.25);
 }
+.time-input {
+    font-size: small;
+    font-weight: 100;
+}
