@@ -1,7 +1,7 @@
 import {
     faFacebook,
     faGithub,
-    faYoutube,
+    faYoutube
 } from "@fortawesome/free-brands-svg-icons";
 import { faCopyright } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -21,7 +21,7 @@ const FooterPage = () => {
                     <span style={{ paddingRight: 5 }}>Copyright </span>
                     <FontAwesomeIcon icon={faCopyright} />{" "}
                     <span style={{ paddingLeft: 5 }}>
-                        {new Date().getFullYear()} EyeOnYou. All Rights
+                        {new Date().getFullYear()} Turtle Timer. All Rights
                         Reserved.
                     </span>
                 </div>

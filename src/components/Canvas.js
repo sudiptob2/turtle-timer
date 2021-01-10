@@ -1,6 +1,7 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Turtle from "./animals_1.png";
 function Canvas() {
+    const [timerStarted, settimerStarted] = useState(true);
     const canvasRef = useRef(null);
     function getRandomInt(min, max) {
         min = Math.ceil(min);
@@ -26,15 +27,16 @@ function Canvas() {
         for (let i = 0; i < numberOfTurtle; i++) {
             arrY[i] = y - 64;
             c.drawImage(imgTag, x + gap * i, arrY[i]); // draw image at current position
-            c.fillText(`${i}`, 5 + x + gap * i, arrY[i]);
+            c.fillText(`${i + 1}`, 25 + x + gap * i, arrY[i] + 80); // tune the x and y position of the turtle number
 
             initialVelocity[i] = Math.random();
-            acc[i] = Math.random();
+            acc[i] = Math.random(); // acceleration
             //console.log(initialVelocity);
         }
         let count = 0;
         let accl = [...acc];
         function animate() {
+
             if (count % 50 === 0) {
                 acc = [...accl];
                 for (let i = 0; i < getRandomInt(1, 21); i++) {
@@ -42,17 +44,21 @@ function Canvas() {
                         getRandomInt(1, 5) * Math.random();
                 }
             }
-            c.clearRect(0, 0, canvas.width, canvas.height); // clear canva
+            c.clearRect(0, 0, canvas.width, canvas.height); // clear canvas
             for (let i = 0; i < numberOfTurtle; i++) {
-                c.fillText(`${i}`, 25 + x + gap * i, arrY[i]);
+
                 c.drawImage(imgTag, x + gap * i, arrY[i]); // draw image at current position
+                c.fillText(`${i + 1}`, 25 + x + gap * i, arrY[i]); // tune the x and y position of the turtle number
 
                 arrY[i] = arrY[i] - 0.2 * acc[i];
             }
             count++;
 
-            if (Math.max(...arrY) > 0) requestAnimationFrame(animate); // loop
+            if (timerStarted && Math.max(...arrY) > 0) requestAnimationFrame(animate); // this is a loop
+
         }
+
+
     });
     return <canvas ref={canvasRef} width="1300" height="20000" />;
 }
