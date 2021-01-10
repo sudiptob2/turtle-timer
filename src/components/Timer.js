@@ -1,9 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
+import { TimerContext } from "../TimerContext";
 import { useInterval } from "./CustomHooks";
 import "./Timer.css";
 
 const Timer = () => {
+    const [time, setTime] = useContext(TimerContext);
     const inputEl = useRef(null);
     const [distance, setDistance] = useState(0);
     const [timerDays, setTimerDays] = useState("00");
@@ -20,6 +22,9 @@ const Timer = () => {
         let a = hms.split(":"); // split it at the colons
         // minutes are worth 60 seconds. Hours are worth 60 minutes.
         let seconds = +a[0] * 60 * 60 + +a[1] * 60 + +a[2];
+
+        setTime(seconds); // update the context
+
         if (seconds) {
             setDistance(seconds * 1000);
         } else {
@@ -51,7 +56,7 @@ const Timer = () => {
         // Reduce the distance
         setDistance(distance - 1000);
 
-        // I wat to put new logic for countdown
+
     }, 1000);
 
     return (
@@ -112,7 +117,7 @@ const Timer = () => {
             </div>
             <div className="row  justify-content-center p-3 ">
                 {alert && (
-                    <div class="container alert alert-danger" role="alert">
+                    <div className="container alert alert-danger" role="alert">
                         Please give interval in a valid format. Hours : Minitues
                         : Seconds !
                     </div>

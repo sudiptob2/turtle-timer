@@ -26,7 +26,7 @@ const FooterPage = () => {
                     </span>
                 </div>
                 <a
-                    href="https://github.com/sudiptob2/"
+                    href="https://github.com/sudiptob2/turtle-timer/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="item3"

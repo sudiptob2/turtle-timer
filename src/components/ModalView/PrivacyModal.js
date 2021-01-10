@@ -6,7 +6,10 @@ const PrivacyModal = (props) => {
     const [open, setOpen] = React.useState(false);
     const policyText = (
         <p>
-            How It works
+            When you start the timer, a race of 20 turtles also starts at the same time. So in the beginning in your mind, you choose a turtle as your ALPHA. When the timer finishes you can test your luck whether your turtle won or not.
+            <br />As you know **Slower the Turtle, Better the Turtle!**
+            <br></br>
+            As the velocity randomly changes, you never know who will win.
         </p>
     );
     return (

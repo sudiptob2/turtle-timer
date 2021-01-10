@@ -3,6 +3,7 @@ import "./App.css";
 import Canvas from "./components/Canvas";
 import FooterPage from "./components/FooterView/FooterPage";
 import Timer from "./components/Timer";
+import { TimerProvider } from "./TimerContext";
 
 function App() {
     return (
@@ -15,12 +16,15 @@ function App() {
                     </div>
                 </div>
                 <div className="row no-gutters">
-                    <div className="border col-md">
-                        <Canvas />
-                    </div>
-                    <div className="border col-md">
-                        <Timer />
-                    </div>
+                    <TimerProvider>
+                        <div className="border col-md">
+                            <Canvas />
+                        </div>
+                        <div className="border col-md">
+                            <Timer />
+                        </div>
+                    </TimerProvider>
+
                 </div>
                 <div className="row justify-content-center alert alert-success no-gutters">
                     <p className="text-center">
