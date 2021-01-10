@@ -5,8 +5,6 @@ function Canvas() {
     const [time, setTime] = useContext(TimerContext);
     const canvasRef = useRef(null);
 
-
-
     function getRandomInt(min, max) {
 
         return (Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
@@ -58,7 +56,7 @@ function Canvas() {
             // Choosen by the programmer
             if (count % 25 === 0) {
                 for (let i = 0; i < 20; i++) {
-                    velocity[i] = getRandomInt(minimumVelocity, minimumVelocity + 40); //calculate the distance reached in the current velocity
+                    velocity[i] = getRandomInt(minimumVelocity, minimumVelocity); //calculate the distance reached in the current velocity
                 }
             }
             c.clearRect(0, 0, canvas.width, canvas.height); // clear canvas
@@ -67,7 +65,7 @@ function Canvas() {
                 c.drawImage(imgTag, x + gap * i, arrY[i]); // draw image at current position
                 c.fillText(`${i + 1}`, 25 + x + gap * i, arrY[i]); // tune the x and y position of the turtle number
 
-                // change the cloro to red
+                // change the color to red
                 c.fillStyle = "red";
                 c.fillText(`${winningTurtleIndex === i ? `(${i + 1})Alpha` : ''}`, 5 + x + gap * i, arrY[i] + 90);
                 // change to default color

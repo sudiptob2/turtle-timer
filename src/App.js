@@ -33,8 +33,9 @@ function App() {
                         the timer finishes you can test your luck weather your
                         turtle won or not. It's really fun!!
                     </p>
+
                     <p style={{ color: "red" }}>
-                        Slower the Turtle, Better the Turtle!
+                        &nbsp; Slower the Turtle, Better the Turtle!
                     </p>
                 </div>
 
