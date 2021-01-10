@@ -1,23 +1,36 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import useSound from 'use-sound';
+import alertSound from '../sounds/alert.mp3';
 import { TimerContext } from "../TimerContext";
 import { useInterval } from "./CustomHooks";
 import "./Timer.css";
 
 const Timer = () => {
+
+    const [playAlert] = useSound(alertSound);
     const [time, setTime] = useContext(TimerContext);
     const inputEl = useRef(null);
-    const [distance, setDistance] = useState(0);
+    const [distance, setDistance] = useState(-1);
     const [timerDays, setTimerDays] = useState("00");
     const [timerHours, setTimerHours] = useState("00");
     const [timerMin, setTimerMin] = useState("00");
     const [timerSec, setTimerSec] = useState("00");
+    // if any invalid time date is given
     const [alert, setAlert] = useState(false);
+
+
 
     let interval = useRef();
 
+    useEffect(() => {
+        if (distance === 0) playAlert();
+
+    }, [distance])
+
     const handleCountDownStart = () => {
-        setAlert(false);
+
+
         let hms = inputEl.current.value; // your input string
         let a = hms.split(":"); // split it at the colons
         // minutes are worth 60 seconds. Hours are worth 60 minutes.
@@ -29,6 +42,7 @@ const Timer = () => {
             setDistance(seconds * 1000);
         } else {
             setAlert(true);
+
         }
     };
     //"July 30, 2020 00:00:00"
@@ -42,10 +56,10 @@ const Timer = () => {
             (distance % (1000 * 60 * 60)) / (1000 * 60)
         );
         const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
         if (distance < 0) {
             // stop our timer
             clearInterval(interval.current);
+
         } else {
             //Update ourr timer
             setTimerDays(days);
@@ -105,7 +119,9 @@ const Timer = () => {
                         className="time-input form-control "
                         placeholder="Format HH : MM : SS Example: 02 : 01 : 37"
                     />
+
                 </div>
+
                 <div className="col-lg-2">
                     <button
                         onClick={handleCountDownStart}

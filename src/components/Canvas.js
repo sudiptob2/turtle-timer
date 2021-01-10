@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useRef } from "react";
 import { TimerContext } from "../TimerContext";
 import Turtle from "./animals_1.png";
+
+
 function Canvas() {
     const [time, setTime] = useContext(TimerContext);
     const canvasRef = useRef(null);
@@ -50,16 +52,33 @@ function Canvas() {
 
         function animate() {
 
+            // if the race is about to finish
 
             // change the velocity after 25 frame
             // it's just a tuning prameter
             // Choosen by the programmer
-            if (count % 25 === 0) {
+            // update velocity in every sec not every frame
+            if (count % fps === 0) {
+                let flag = Math.floor(getRandomInt(0, 2));
+                console.log(flag);
                 for (let i = 0; i < 20; i++) {
-                    velocity[i] = getRandomInt(minimumVelocity, minimumVelocity); //calculate the distance reached in the current velocity
+                    if (i % 2 === flag)
+                        velocity[i] = getRandomInt(minimumVelocity - 2, minimumVelocity + 5); //calculate the distance reached in the current velocity
                 }
             }
             c.clearRect(0, 0, canvas.width, canvas.height); // clear canvas
+            let remainingTime = Math.floor(time - count / fps);
+            if (time > 0 && remainingTime <= 10 && remainingTime > 0) {
+                c.fillStyle = remainingTime <= 5 ? "red" : "green";
+                c.fillText(`Approaching to the finish line in less than (${remainingTime}) sec. Let's see who wins!`, 25, canvas.height - 20);
+                c.fillStyle = 'black';
+            }
+            else {
+                c.fillStyle = "green";
+                c.fillText(`Turtle (${winningTurtleIndex + 1}) won!!`, 25, canvas.height - 20);
+
+
+            }
             for (let i = 0; i < numberOfTurtle; i++) {
 
                 c.drawImage(imgTag, x + gap * i, arrY[i]); // draw image at current position
@@ -67,7 +86,7 @@ function Canvas() {
 
                 // change the color to red
                 c.fillStyle = "red";
-                c.fillText(`${winningTurtleIndex === i ? `(${i + 1})Alpha` : ''}`, 5 + x + gap * i, arrY[i] + 90);
+                c.fillText(`${winningTurtleIndex === i ? `(${i + 1}) Alpha` : ''}`, 5 + x + gap * i, arrY[i] + 90);
                 // change to default color
                 c.fillStyle = 'black';
 
@@ -80,8 +99,9 @@ function Canvas() {
             }
             count++;
 
-            if (time > 0 && Math.max(...arrY) > 0) {
+            if (time > 0 && Math.max(...arrY) >= 0) {
                 winningTurtleIndex = arrY.indexOf(Math.max(...arrY));
+
                 setTimeout(() => {
                     requestAnimationFrame(animate);
                 }, 1000 / fps); // requestAnimationFrame frame is a loop

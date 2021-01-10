@@ -30,7 +30,7 @@ function App() {
                     <p className="text-center">
                         Choose your{" "}
                         <span style={{ fontWeight: "bold" }}>Alpha.</span> When
-                        the timer finishes you can test your luck weather your
+                        the timer finishes you can test your luck wheather your
                         turtle won or not. It's really fun!!
                     </p>
 
