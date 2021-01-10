@@ -117,8 +117,10 @@ const Timer = () => {
                         type="text"
                         ref={inputEl}
                         className="time-input form-control "
-                        placeholder="Format HH : MM : SS Example: 02 : 01 : 37"
+
+                        defaultValue="0:0:30"
                     />
+                    <p className="figure-caption">&nbsp;Format HH : MM : SS Example: 02 : 01 : 37</p>
 
                 </div>
 

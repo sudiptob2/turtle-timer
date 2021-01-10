@@ -67,18 +67,19 @@ function Canvas() {
                 }
             }
             c.clearRect(0, 0, canvas.width, canvas.height); // clear canvas
+            //console.log("max ", Math.floor(Math.max(...arrY)));
             let remainingTime = Math.floor(time - count / fps);
-            if (time > 0 && remainingTime <= 10 && remainingTime > 0) {
+            if (Math.floor(Math.max(...arrY) <= 1)) {
+
+                c.fillStyle = "green";
+                c.fillText(`Turtle (${winningTurtleIndex + 1}) won!!`, 25, canvas.height - 20);
+            }
+            else if (time > 0 && remainingTime <= 10 && remainingTime > 0) {
                 c.fillStyle = remainingTime <= 5 ? "red" : "green";
                 c.fillText(`Approaching to the finish line in less than (${remainingTime}) sec. Let's see who wins!`, 25, canvas.height - 20);
                 c.fillStyle = 'black';
             }
-            else {
-                c.fillStyle = "green";
-                c.fillText(`Turtle (${winningTurtleIndex + 1}) won!!`, 25, canvas.height - 20);
 
-
-            }
             for (let i = 0; i < numberOfTurtle; i++) {
 
                 c.drawImage(imgTag, x + gap * i, arrY[i]); // draw image at current position
@@ -99,7 +100,7 @@ function Canvas() {
             }
             count++;
 
-            if (time > 0 && Math.max(...arrY) >= 0) {
+            if (time > 0 && Math.floor(Math.max(...arrY) >= 0)) {
                 winningTurtleIndex = arrY.indexOf(Math.max(...arrY));
 
                 setTimeout(() => {
