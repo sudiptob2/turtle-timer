@@ -9,7 +9,7 @@ Turtle race countdown timer is a simple countdown timer. But the interesting thi
 As the velocity constantly changing, you never know who wins!
 
 
-        ![Turtle Timer GIF](demo/timerdemo.gif)
+   ![Turtle Timer GIF](demo/timerdemo.gif)
 
 ## Installation
 
